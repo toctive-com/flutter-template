@@ -69,5 +69,7 @@ class AppInterceptors extends Interceptor {
   }
 
   @override
-  Future<void> onError(DioException err, handler) async {}
+  Future<void> onError(DioException err, handler) async {
+    // handle specific error codes
+  }
 }
