@@ -6,22 +6,24 @@ import 'package:template/core/interceptors/dio_interceptor.dart';
 
 /// Handle Http Request
 class DioHelper {
+  /// init dio
   static Dio instanceDio() {
-    Dio dio = gi();
+    final dio = gi() as Dio;
     dio.interceptors.add(AppInterceptors(gi(), gi()));
     return dio;
   }
 
-  Future<Response> post(
+  /// post request
+  Future<Response<dynamic>> post(
     String path, {
-    data,
-    queryParameters,
-    headers,
-    formData,
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? formData,
     Options? options,
-    Function(int, int)? onReceiveProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
-    return await instanceDio().post(
+    return instanceDio().post(
       path,
       data: data,
       onReceiveProgress: onReceiveProgress,
@@ -30,15 +32,16 @@ class DioHelper {
     );
   }
 
-  Future<Response> put(
+  // put request
+  Future<Response<dynamic>> put(
     String path, {
-    data,
-    queryParameters,
-    headers,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
     Options? options,
-    Function(int, int)? onReceiveProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
-    return await instanceDio().put(
+    return instanceDio().put(
       path,
       data: data,
       onReceiveProgress: onReceiveProgress,
@@ -47,15 +50,16 @@ class DioHelper {
     );
   }
 
-  Future<Response> patch(
+  /// patch request
+  Future<Response<dynamic>> patch(
     String path, {
-    data,
-    queryParameters,
-    headers,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
     Options? options,
-    Function(int, int)? onReceiveProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
-    return await instanceDio().patch(
+    return instanceDio().patch(
       path,
       data: data,
       onReceiveProgress: onReceiveProgress,
@@ -64,13 +68,14 @@ class DioHelper {
     );
   }
 
-  Future<Response> get(
+  /// get request
+  Future<Response<dynamic>> get(
     String path, {
-    dynamic queryParameters,
-    token,
-    headers,
+    Map<String, dynamic>? queryParameters,
+    String? token,
+    Map<String, dynamic>? headers,
     Options? options,
-    Function(int, int)? onReceiveProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     return instanceDio().get(
       path,
@@ -80,14 +85,15 @@ class DioHelper {
     );
   }
 
-  Future<Response> delete(
+  // delete request
+  Future<Response<dynamic>> delete(
     String path, {
-    queryParameters,
-    token,
-    headers,
+    Map<String, dynamic>? queryParameters,
+    String? token,
+    Map<String, dynamic>? headers,
     Options? options,
   }) async {
-    return await instanceDio().delete(
+    return instanceDio().delete(
       path,
       queryParameters: queryParameters,
       options: options ?? Options(headers: headers),

@@ -5,26 +5,47 @@ import 'package:template/core/utils/shared_preference/shared_preference_helper.d
 
 const noInternetConnection = 'No internet connection';
 
+/// App Interceptors
 class AppInterceptors extends Interceptor {
-  final Dio dio;
-
-  // Header field name
-  static const acceptLangHeader = "Accept-Language";
-  static const acceptHeader = 'accept';
-  static const contentEncodingHeader = 'content-encoding';
-  static const contentLengthHeader = 'content-length';
-  static const contentTypeHeader = 'content-type';
-  static const authenticateHeader = 'Authorization';
-  static const applicationJson = "application/json";
-  static const bearer = "Bearer ";
-
-  final SharedPreferencesHelper sharedPreferencesHelper;
-
+  /// App Interceptors Constructor
   AppInterceptors(this.sharedPreferencesHelper, this.dio);
 
+  /// Dio
+  final Dio dio;
+
+  /// Header accept language
+  static const acceptLangHeader = 'Accept-Language';
+
+  /// Header accept
+  static const acceptHeader = 'accept';
+
+  /// Header content encoding
+  static const contentEncodingHeader = 'content-encoding';
+
+  /// Header content length
+  static const contentLengthHeader = 'content-length';
+
+  /// Header content type
+  static const contentTypeHeader = 'content-type';
+
+  /// Header authorization
+  static const authenticateHeader = 'Authorization';
+
+  /// Header application json
+  static const applicationJson = 'application/json';
+
+  /// Header bearer
+  static const bearer = 'Bearer ';
+
+  /// Shared Preference Helper
+  final SharedPreferencesHelper sharedPreferencesHelper;
+
   @override
-  Future onRequest(RequestOptions options, handler) async {
-    var connectivityResult = await Connectivity().checkConnectivity();
+  Future<dynamic> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       throw DioException(
         error: noInternetConnection,
@@ -38,20 +59,23 @@ class AppInterceptors extends Interceptor {
         options.headers.addAll({authenticateHeader: bearer + token});
       }
 
-      options.baseUrl = APIConstants.baseUrl;
+      options
+        ..baseUrl = APIConstants.baseUrl
 
-      /// Redirects true
-      options.followRedirects = true;
-      // Set a timeout of 10 seconds for the request
-      options.connectTimeout = const Duration(seconds: 60);
-      options.receiveTimeout = const Duration(seconds: 60);
-      options.sendTimeout = const Duration(seconds: 60);
+        /// Redirects true
+        ..followRedirects = true
+        // Set a timeout of 10 seconds for the request
+        ..connectTimeout = const Duration(seconds: 60)
+        // Receive data with a timeout of some seconds
+        ..receiveTimeout = const Duration(seconds: 60)
+        // Send data with a timeout of some seconds
+        ..sendTimeout = const Duration(seconds: 60);
 
       /// Add Header Accepted
       options.headers.addAll({
         Headers.acceptHeader: applicationJson,
         Headers.contentTypeHeader: applicationJson,
-        acceptLangHeader: "en",
+        acceptLangHeader: 'en',
       });
 
       try {
@@ -69,7 +93,10 @@ class AppInterceptors extends Interceptor {
   }
 
   @override
-  Future<void> onError(DioException err, handler) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     // handle specific error codes
   }
 }
