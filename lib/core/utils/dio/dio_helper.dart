@@ -32,7 +32,7 @@ class DioHelper {
     );
   }
 
-  // put request
+  /// put request
   Future<Response<dynamic>> put(
     String path, {
     Map<String, dynamic>? data,
@@ -85,7 +85,7 @@ class DioHelper {
     );
   }
 
-  // delete request
+  /// delete request
   Future<Response<dynamic>> delete(
     String path, {
     Map<String, dynamic>? queryParameters,

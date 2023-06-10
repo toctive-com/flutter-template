@@ -1,3 +1,5 @@
+/// Route names for the application
 class RouteNames {
-  static String home = "home-screen";
+  /// Home screen
+  static String home = 'home-screen';
 }

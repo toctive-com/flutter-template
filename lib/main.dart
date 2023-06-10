@@ -7,7 +7,9 @@ void main() {
   runApp(const MainApp());
 }
 
+/// Main app widget.
 class MainApp extends StatelessWidget {
+  /// Default constructor.
   const MainApp({super.key});
 
   @override
@@ -20,7 +22,6 @@ class MainApp extends StatelessWidget {
         ),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
         child: const Scaffold(

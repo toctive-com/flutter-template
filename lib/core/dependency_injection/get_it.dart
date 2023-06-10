@@ -6,8 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/core/utils/dio/dio_helper.dart';
 import 'package:template/core/utils/shared_preference/shared_preference_helper.dart';
 
+/// GetIt is a simple service locator for Dart and Flutter projects. [GetIt]
 final gi = GetIt.instance;
 
+/// init GetIt
 Future<void> initGi() async {
   // Repository
 
@@ -19,16 +21,19 @@ Future<void> initGi() async {
   );
 
   // shared preference
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-  gi.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
-  gi.registerLazySingleton(
-      () => SharedPreferencesHelper(sharedPreference: gi()));
+  final sharedPreferences = await SharedPreferences.getInstance();
+  gi
+    ..registerLazySingleton<SharedPreferences>(() => sharedPreferences)
 
-  // data ( local + remote) repositories Objects
-  gi.registerLazySingleton(() => Dio());
-  gi.registerLazySingleton(() => DioHelper());
-  gi.registerLazySingleton<Isar>(() => isar);
+    /// [SharedPreferencesHelper] is a class that handle shared preference
+    ..registerLazySingleton(
+      () => SharedPreferencesHelper(sharedPreference: gi()),
+    )
+
+    // data ( local + remote) repositories Objects
+    ..registerLazySingleton(Dio.new)
+    ..registerLazySingleton(DioHelper.new)
+    ..registerLazySingleton<Isar>(() => isar);
 
   //Isar Mangers
 }
