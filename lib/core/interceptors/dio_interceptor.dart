@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:template/core/apis/api_class.dart';
 import 'package:template/core/utils/shared_preference/shared_preference_helper.dart';
 
+/// No internet connection
 const noInternetConnection = 'No internet connection';
 
 /// App Interceptors
